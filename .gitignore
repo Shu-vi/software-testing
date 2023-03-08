@@ -25,3 +25,4 @@ hs_err_pid*
 target
 build
 src/main/java/org/Generalov/utils/GetProperties.java
+.gradle
