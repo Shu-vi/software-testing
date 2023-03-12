@@ -1,5 +1,7 @@
-package org.Generalov.entity;
+package org.Generalov.database.entity;
 
+
+import java.util.Objects;
 
 public class User {
     private Integer id;
@@ -17,6 +19,20 @@ public class User {
     public User(String login, String password) {
         this.login = login;
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(login, user.login)
+                && Objects.equals(password, user.password) && Objects.equals(isOnline, user.isOnline);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, password, isOnline);
     }
 
     public void setId(Integer id) {
