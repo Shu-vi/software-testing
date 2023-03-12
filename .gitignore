@@ -26,3 +26,5 @@ target
 build
 src/main/java/org/Generalov/utils/GetProperties.java
 .gradle
+
+*.properties
