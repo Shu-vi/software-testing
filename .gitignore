@@ -28,3 +28,4 @@ src/main/java/org/Generalov/utils/GetProperties.java
 .gradle
 
 *.properties
+src/test/java/Properties.java
