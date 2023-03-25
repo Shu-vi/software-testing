@@ -1,27 +1,33 @@
-<h1 style="text-align: center;">Задание</h1>
-<ol>
-    <li>Подготовить пустую базу в @Before, очищать базу в  @After</li>
-    <li>Заполнить данными с помощью <strong>ResourceDatabasePopulator</strong></li>
-    <li>Инициализировать таблицы для интеграционного теста в методе <i>setUp()</i></li>
-    <li>Реализовать тесты на <strong>Spring, JDBCTestUtils</strong> : удаляем таблицу, создаем новую</li>
-</ol>
-<h3>Тесты:</h3>
+<h1>Задание</h1>
+<h4>Автоматизировать процес авторизации в личном кабинете.</h4>
+<p><strong>Стек:</strong></p>
 <ul>
-    <li>получить пользователей</li>
-    <li>подсчитать количество пользователей в базе</li>
-    <li>заполнить данными (создать пользователя)</li>
-    <li>Удалить данные (удалить пользователя)</li>
+    <li>Selenium (WebDriver)</li>
+    <li>Java</li>
+    <li>Браузер: Chrome</li>
 </ul>
-<span>
-    <span style="color: rgba(255, 255, 255, .5)">Использовать</span> 
-    <strong>Assert.</strong><span style="color: aquamarine">assertThat</span> 
-    для проверки результата
-</span>
-<p>
-    <a style="background-color: rgb(255, 252, 211)" href="https://mywebcenter.ru/integracionnoe-testirovanie-i-spring-jdbc-4029/">
-        Материал, необходимый для выполнения задания.
-    </a>
-</p>
-<h1 style="text-align: center; text-transform: uppercase">Важно</h1>
-<p>В задании требуется использовать Assert.assertThat, которого нет в junit5, поэтому я использовал Assertions.assertEquals, предварительно реализовав hashCode и equals, в необходимых классах.</p>
-<p>Кроме того, в материале к заданию, один из тестов(который на подсчёт строк в таблице) проверяется через JDBCTestUtils, я же использовал метод своей БД, чтоб сделать это(нужно ведь тестировать методы БД, а не готовый класс, который считает количество строк в таблице?)</p>
+<p><strong>Четное число в списке группы:</strong> автоматизация входа в личный кабинет - <a href="https://kpfu.ru">kpfu.ru</a></p>
+<p><strong>Нечётное число<u><i>(Мой вариант)</i></u> в списке группы:</strong> автоматизация входа в личный кабинет - <a href="https://passport.yandex.ru">passport.yandex.ru</a></p>
+<p>Для поиска и идентификации элементов объявить объект драйвера, затем использовать статические методы (лоаторы) класса By (Xpath, classname, id)</p>
+<p>Сценарии:</p>
+<ol>
+    <li>Запуск/инициализация Selenium WebDriver. Запуск браузера Chrome (ChromeDriver)</li>
+    <li>DOM. Поиск элементов на странице выполнить при помощи локаторов (CSS, Xpath,classname,id)</li>
+    <li>Автоматизация сценария авторизации на портале</li>
+    <li>Выход с учетной записи, закрытие объекта драйвера</li>
+</ol>
+<p>Справочная информация:</p>
+<p><a href="https://habr.com/ru/post/502292/">https://habr.com/ru/post/502292/</a></p>
+<p><a href="https://chromedriver.chromium.org/downloads">https://chromedriver.chromium.org/downloads</a></p>
+
+<br/>
+<strong>Работа с элементами:</strong>
+
+```
+WebElement userName = driver.findElement(By.cssSelector("input#username"));
+//или
+WebElement userName = driver.findElement(By.cssSelector("#username"));
+Xpath локаторы (абсолютный и относительный путь)
+WebElement userName = driver.findElement(By.xpath("html/body/div/div/form/input"));
+WebElement userName = driver.findElement(By.xpath("//input"));
+```
