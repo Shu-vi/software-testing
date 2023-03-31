@@ -29,3 +29,6 @@ src/main/java/org/Generalov/utils/GetProperties.java
 
 *.properties
 src/test/java/Properties.java
+
+allure-results
+*.pdf
