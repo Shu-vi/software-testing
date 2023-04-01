@@ -1,3 +1,4 @@
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selectors.byId;
@@ -15,15 +16,15 @@ public class YandexAuthPage {
     //---------------------------------------------------
     //ЛОГИКА СТРАНИЦЫ
     public void enterLogin(String login) {
-        loginField.setValue(login);
+        loginField.should(Condition.exist).setValue(login);
     }
 
     public void enterPassword(String password) {
-        passwordField.setValue(password);
+        passwordField.should(Condition.exist).setValue(password);
     }
 
     public void clickSignInButton() {
-        signInButton.click();
+        signInButton.should(Condition.exist).click();
     }
 
     public boolean atPage() {
@@ -31,7 +32,7 @@ public class YandexAuthPage {
     }
 
     public void mailButtonClick() {
-        mailButton.click();
+        mailButton.should(Condition.exist).click();
     }
 
     public String getTitle(){

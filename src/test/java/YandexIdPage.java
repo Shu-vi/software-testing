@@ -1,3 +1,4 @@
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selectors.byXpath;
@@ -7,12 +8,12 @@ public class YandexIdPage {
     private SelenideElement navbar = $(byXpath("//div[@class='UserID-Badge ']"));
     private SelenideElement logoutButton = $(byXpath("//div[contains(@class, 'Logout')]"));
     private SelenideElement iframeElement = $(byXpath("//iframe[@class='UserWidget-Iframe']"));
+    private SelenideElement diskButton = $(".MenuItem_disk");
     private static final String PAGE_TITLE = "Яндекс ID";
 
     //---------------------------------------------------
     //ЛОГИКА СТРАНИЦЫ
     public boolean atPage() {
-        System.out.println(title());
         return title().equals(PAGE_TITLE);
     }
 
@@ -21,12 +22,18 @@ public class YandexIdPage {
     }
 
     public void navbarClick() {
-        navbar.click();
+        navbar.should(Condition.exist).click();
     }
 
     public void logoutButtonClick() {
         switchTo().frame(iframeElement);
-        logoutButton.click();
+        logoutButton.should(Condition.exist).click();
+        switchTo().defaultContent();
+    }
+
+    public void diskButtonClick() {
+        switchTo().frame(iframeElement);
+        diskButton.should(Condition.exist).click();
         switchTo().defaultContent();
     }
 }
