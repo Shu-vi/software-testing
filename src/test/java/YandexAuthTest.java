@@ -1,7 +1,9 @@
 import com.codeborne.pdftest.PDF;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.junit5.ScreenShooterExtension;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 
@@ -12,6 +14,7 @@ import java.io.IOException;
 import static com.codeborne.selenide.Selenide.open;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ExtendWith({ScreenShooterExtension.class})
 public class YandexAuthTest {
     private static YandexAuthPage yandexAuthPage;
     private static YandexIdPage yandexIdPage;
@@ -26,6 +29,7 @@ public class YandexAuthTest {
         Configuration.timeout = 120000;
         open("https://passport.yandex.ru/");
         file = new File(Properties.PATH_TO_PDF_FILE);
+        Configuration.reportsFolder = "build/test-results/reports";
     }
 
     @Test
@@ -41,10 +45,9 @@ public class YandexAuthTest {
         Assertions.assertTrue(yandexIdPage.atPage());
     }
 
-
     @Test
     @Order(2)
-    public void uploadToDiskPositive(){
+    public void uploadToDiskPositive() {
         yandexIdPage.navbarClick();
         yandexIdPage.diskButtonClick();
 
@@ -76,6 +79,6 @@ public class YandexAuthTest {
     public void logoutPositive() {
         yandexDiskPage.navbarClick();
         yandexDiskPage.exitButtonClick();
-        Assertions.assertTrue(yandexAuthPage.atPage());
+        Assertions.assertFalse(yandexAuthPage.atPage());
     }
 }
