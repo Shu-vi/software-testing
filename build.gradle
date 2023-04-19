@@ -10,11 +10,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
-    testImplementation 'io.qameta.allure:allure-junit5:2.21.0'
-    implementation 'com.codeborne:selenide:6.12.4'
-    implementation 'io.qameta.allure:allure-selenide:2.21.0'
-    testImplementation 'com.codeborne:pdf-test:1.8.1'
+    testImplementation 'com.codeborne:selenide-appium:1.7.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testImplementation 'commons-io:commons-io:2.11.0'
+    testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.32'
 }
 
 test {
