@@ -23,6 +23,7 @@ public class AndroidDriverOK implements WebDriverProvider {
         capabilities.setCapability("deviceName", Properties.DEVICE_NAME);
         capabilities.setCapability(APP_PACKAGE, Properties.APP_PACKAGE);
         capabilities.setCapability(APP_ACTIVITY, Properties.APP_ACTIVITY);
+        capabilities.setCapability("automationName", "UiAutomator2");
 
         try {
             return new AndroidDriver<>(new URL(Properties.URL), capabilities);
