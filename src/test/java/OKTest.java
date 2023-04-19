@@ -1,6 +1,3 @@
-package test;
-
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,15 +21,15 @@ public class OKTest {
     public static void setUp() {
         closeWebDriver();
         Configuration.browserSize = null;
-        Configuration.browser = AndroidDriverWithCalculator.class.getName();
+        Configuration.browser = AndroidDriverOK.class.getName();
         Configuration.timeout = 120000;
         open();
     }
 
     @Test
     void calculator() {
-        $(By.id("ru.ok.android:id/text_login")).should(exist).setValue("+79375902297");
-        $(By.id("ru.ok.android:id/password_text")).should(exist).setValue("dcswuag6bw");
+        $(By.id("ru.ok.android:id/text_login")).should(exist).setValue(Properties.OK_LOGIN);
+        $(By.id("ru.ok.android:id/password_text")).should(exist).setValue(Properties.OK_PASSWORD);
         $(By.id("ru.ok.android:id/login_button")).should(exist).click();
         $(By.xpath("//android.widget.ImageButton[@content-desc=\"Открыть боковое меню\"]")).should(exist);
         Utils.scrollOneForward(2);
@@ -55,7 +52,6 @@ public class OKTest {
         $(By.xpath("//android.widget.ImageButton[@content-desc=\"Перейти вверх\"]")).should(exist).click();
         $(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.LinearLayout/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[7]")).should(exist).click();
         $(By.id("ru.ok.android:id/md_buttonDefaultPositive")).should(exist).click();
-        // android.view.ViewGroup[2]/android.widget.Switch ВЫКЛ ВКЛФ
     }
 
 
