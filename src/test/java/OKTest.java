@@ -9,19 +9,17 @@ public class OKTest {
     private static NewsFeedPage newsFeedPage;
     private static DiscussionsPage discussionsPage;
     private static NavbarPage navbarPage;
-    private static ListMenuPage listMenuPage;
     private static SettingsPage settingsPage;
-    private static SettingsPage.Appearance appearance;
-    @BeforeAll
-    public static void setUp() {
-        closeWebDriver();
+    static {
         authPage = new AuthPage();
         newsFeedPage = new NewsFeedPage();
         discussionsPage = new DiscussionsPage();
         navbarPage = new NavbarPage();
-        listMenuPage = new ListMenuPage();
         settingsPage = new SettingsPage();
-        appearance = settingsPage.new Appearance();
+    }
+    @BeforeAll
+    public static void setUp() {
+        closeWebDriver();
         Configuration.browserSize = null;
         Configuration.browser = AndroidDriverOK.class.getName();
         Configuration.timeout = 120000;
@@ -59,7 +57,7 @@ public class OKTest {
         discussionsPage.leftBarClick();
         Assertions.assertTrue(navbarPage.atPage());
         navbarPage.moreClick();
-        listMenuPage.settingsButtonClick();
+        navbarPage.settingsButtonClick();
         Assertions.assertTrue(settingsPage.apPage());
     }
 
@@ -67,9 +65,10 @@ public class OKTest {
     @Order(5)
     public void settings(){
         settingsPage.deviceSettingsClick();
-        appearance.appearanceSettingsClick();
-        appearance.themeChange();
-        appearance.themeChange();
+        settingsPage.appearanceSettingsClick();
+        settingsPage.themeChange();
+        Assertions.assertTrue(settingsPage.isBlackThemeActive());
+        settingsPage.themeChange();
         settingsPage.backButtonClick();
         settingsPage.backButtonClick();
         settingsPage.exitButtonClick();
