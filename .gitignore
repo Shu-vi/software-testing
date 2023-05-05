@@ -32,3 +32,4 @@ src/test/java/Properties.java
 
 allure-results
 *.pdf
+*browserStack.json
