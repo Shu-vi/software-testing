@@ -1,26 +1,35 @@
-package pages;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.By;
+import org.openqa.selenium.support.PageFactory;
 
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.$;
 
-public class NavbarPage {
+public class NavbarPage extends Page {
+    @AndroidFindBy(id = "ru.ok.android:id/nav_menu_item_profile_name")
+    private MobileElement username;
+    @AndroidFindBy(accessibility = "Ещё")
+    private MobileElement more;
+    @AndroidFindBy(xpath = "//android.widget.LinearLayout[10]")
+    private MobileElement settingsButton;
 
-    private SelenideElement username = $(By.id("ru.ok.android:id/nav_menu_item_profile_name"));
-    private SelenideElement more = $(By.xpath("//android.view.ViewGroup[@content-desc=\"Ещё\"]"));
-    private SelenideElement settingsButton = $(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[10]"));
+    public NavbarPage(AndroidDriver driver) {
+        super(driver);
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    }
 
     public void settingsButtonClick() {
-        settingsButton.should(Condition.exist).click();
+        $(settingsButton).should(exist).click();
     }
 
     public void moreClick() {
-        more.should(Condition.exist).click();
+        $(more).should(exist).click();
     }
 
     public Boolean atPage() {
-        return username.should(Condition.exist).isDisplayed();
+        return $(username).should(exist).isDisplayed();
     }
 }

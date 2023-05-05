@@ -1,27 +1,38 @@
-import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.By;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.openqa.selenium.support.PageFactory;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.$;
 
-public class NewsFeedPage {
-    private SelenideElement newsHeader = $(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.LinearLayout/android.view.ViewGroup/android.widget.TextView"));
-    private SelenideElement discussionButton = $(By.xpath("//android.view.ViewGroup[@content-desc=\"Обсуждения\"]/android.widget.ImageView"));
+public class NewsFeedPage extends Page{
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text='Лента']")
+    private MobileElement newsHeader;
+    @AndroidFindBy(accessibility = "Обсуждения")
+    private MobileElement discussionButton;
+
+    public NewsFeedPage(AndroidDriver driver) {
+        super(driver);
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    }
 
 
     public Boolean atPage(){
-        return newsHeader.should(exist).isDisplayed();
+        return $(this.newsHeader).should(exist).isDisplayed();
     }
 
     public void scrollDown(){
         Utils.scrollOneForward(2);
     }
 
+
     public void scrollTop(){
         Utils.scrollOneBackward(1);
     }
 
     public void discussionClick(){
-        discussionButton.click();
+        $(discussionButton).should(exist).click();
     }
 }
