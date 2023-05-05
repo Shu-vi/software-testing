@@ -1,0 +1,14 @@
+{
+  "appium": {
+    "capabilities": {
+      "appium:deviceName": "iPhone 12",
+      "appium:platformName": "iOS",
+      "appium:platformVersion": "14.5",
+      "appium:automationName": "XCUITest",
+      "appium:udid": "00008020-001C2D903C42002E",
+      "appium:appPackage": "ru.ok.android",
+      "appium:appActivity": "ru.ok.android.ui.activity.main.OdklActivity"
+    },
+    "url": "http://127.0.0.1:4723/wd/hub"
+  }
+}
