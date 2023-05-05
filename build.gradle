@@ -13,6 +13,8 @@ dependencies {
     testImplementation 'com.codeborne:selenide-appium:1.7.4'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
     testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.32'
+    implementation 'org.json:json:20230227'
+    testImplementation 'org.testng:testng:7.7.1'
 }
 
 test {
