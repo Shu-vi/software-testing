@@ -1,5 +1,8 @@
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.WebDriverRunner;
+import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.*;
+
 import static com.codeborne.selenide.Selenide.*;
 
 
@@ -10,20 +13,24 @@ public class OKTest {
     private static DiscussionsPage discussionsPage;
     private static NavbarPage navbarPage;
     private static SettingsPage settingsPage;
-    static {
-        authPage = new AuthPage();
-        newsFeedPage = new NewsFeedPage();
-        discussionsPage = new DiscussionsPage();
-        navbarPage = new NavbarPage();
-        settingsPage = new SettingsPage();
-    }
+    private static AndroidDriver driver;
+
     @BeforeAll
-    public static void setUp() {
+    public static void setUp(){
         closeWebDriver();
-        Configuration.browserSize = null;
-        Configuration.browser = AndroidDriverOK.class.getName();
-        Configuration.timeout = 120000;
-        open();
+        Configuration.timeout = Config.TIMEOUTS;
+        driver = DriverOK.createDriver();
+        WebDriverRunner.setWebDriver(driver);
+        authPage = new AuthPage(driver);
+        newsFeedPage = new NewsFeedPage(driver);
+        discussionsPage = new DiscussionsPage(driver);
+        navbarPage = new NavbarPage(driver);
+        settingsPage = new SettingsPage(driver);
+    }
+
+    @AfterAll
+    public static void tearDown(){
+        WebDriverRunner.closeWebDriver();
     }
 
     @Test
@@ -37,7 +44,7 @@ public class OKTest {
 
     @Test
     @Order(2)
-    public void newsFeed(){
+    public void newsFeed() {
         newsFeedPage.scrollDown();
         newsFeedPage.scrollTop();
         Assertions.assertTrue(newsFeedPage.atPage());
@@ -46,14 +53,14 @@ public class OKTest {
 
     @Test
     @Order(3)
-    public void discussion(){
+    public void discussion() {
         discussionsPage.scrollTop();
         Assertions.assertTrue(discussionsPage.atPage());
     }
 
     @Test
     @Order(4)
-    public void navbar(){
+    public void navbar() {
         discussionsPage.leftBarClick();
         Assertions.assertTrue(navbarPage.atPage());
         navbarPage.moreClick();
@@ -63,7 +70,7 @@ public class OKTest {
 
     @Test
     @Order(5)
-    public void settings(){
+    public void settings() {
         settingsPage.deviceSettingsClick();
         settingsPage.appearanceSettingsClick();
         settingsPage.themeChange();
