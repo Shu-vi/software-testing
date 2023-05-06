@@ -1,4 +1,5 @@
 import com.codeborne.selenide.Condition;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -15,7 +16,7 @@ public class AuthPage extends Page {
     @AndroidFindBy(id = "ru.ok.android:id/login_button")
     private MobileElement loginButton;
 
-    public AuthPage(AndroidDriver driver) {
+    public AuthPage(AppiumDriver<MobileElement> driver) {
         super(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }

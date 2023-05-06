@@ -1,5 +1,5 @@
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
@@ -16,7 +16,7 @@ public class NavbarPage extends Page {
     @AndroidFindBy(xpath = "//android.widget.LinearLayout[10]")
     private MobileElement settingsButton;
 
-    public NavbarPage(AndroidDriver driver) {
+    public NavbarPage(AppiumDriver<MobileElement> driver) {
         super(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }

@@ -1,5 +1,5 @@
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
@@ -12,8 +12,9 @@ public class DiscussionsPage extends Page {
     private MobileElement leftBar;
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Обсуждения']")
     private MobileElement discussionHeader;
-
-    public DiscussionsPage(AndroidDriver driver) {
+    @AndroidFindBy(accessibility = "Сообщения")
+    private MobileElement messages;
+    public DiscussionsPage(AppiumDriver<MobileElement> driver) {
         super(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
@@ -24,6 +25,10 @@ public class DiscussionsPage extends Page {
 
     public void leftBarClick() {
         $(leftBar).should(exist).click();
+    }
+
+    public void messagesClick(){
+        $(messages).should(exist).click();
     }
 
     public boolean atPage() {

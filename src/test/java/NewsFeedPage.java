@@ -1,3 +1,4 @@
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -13,7 +14,7 @@ public class NewsFeedPage extends Page{
     @AndroidFindBy(accessibility = "Обсуждения")
     private MobileElement discussionButton;
 
-    public NewsFeedPage(AndroidDriver driver) {
+    public NewsFeedPage(AppiumDriver<MobileElement> driver) {
         super(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
