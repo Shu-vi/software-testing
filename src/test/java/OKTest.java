@@ -1,6 +1,7 @@
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import org.junit.jupiter.api.*;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -13,23 +14,24 @@ public class OKTest {
     private static DiscussionsPage discussionsPage;
     private static NavbarPage navbarPage;
     private static SettingsPage settingsPage;
-    private static AndroidDriver driver;
+    private static MessagesPage messagesPage;
 
     @BeforeAll
-    public static void setUp(){
+    public static void setUp() {
         closeWebDriver();
         Configuration.timeout = Config.TIMEOUTS;
-        driver = DriverOK.createDriver();
+        AppiumDriver<MobileElement> driver = DriverOK.createDriver();
         WebDriverRunner.setWebDriver(driver);
         authPage = new AuthPage(driver);
         newsFeedPage = new NewsFeedPage(driver);
         discussionsPage = new DiscussionsPage(driver);
         navbarPage = new NavbarPage(driver);
+        messagesPage = new MessagesPage(driver);
         settingsPage = new SettingsPage(driver);
     }
 
     @AfterAll
-    public static void tearDown(){
+    public static void tearDown() {
         WebDriverRunner.closeWebDriver();
     }
 
@@ -78,9 +80,42 @@ public class OKTest {
         settingsPage.themeChange();
         settingsPage.backButtonClick();
         settingsPage.backButtonClick();
-        settingsPage.exitButtonClick();
-        settingsPage.exitButtonConfirmClick();
+        settingsPage.backButtonClick();
+        discussionsPage.messagesClick();
     }
 
+    @Test
+    @Order(6)
+    public void messages() {
+        messagesPage.createChatClick();
+        messagesPage.createChatConfirmClick();
+        messagesPage.setChatTitle("Test chat");
+        messagesPage.saveButtonClick();
+        messagesPage.setTextInputField("Привет, Африка!");
+        messagesPage.addAttachmentClick();
+        messagesPage.allowAccessClick();
+        messagesPage.photoClick();
+        messagesPage.photoClick();
+        messagesPage.sendPhotoClick();
+    }
 
+    @Test
+    @Order(7)
+    public void deleteMessage() {
+        messagesPage.messageClick();
+        messagesPage.deleteButtonClick();
+        messagesPage.deleteConfirmClick();
+        messagesPage.backButtonClick();
+        messagesPage.navbarClick();
+    }
+
+    @Test
+    @Order(8)
+    public void doNotDisturb() {
+        navbarPage.settingsButtonClick();
+        settingsPage.notificationsSectionClick();
+        settingsPage.pushNotificationSectionClick();
+        settingsPage.doNotDisturbClick();
+        settingsPage.oneHourClick();
+    }
 }
