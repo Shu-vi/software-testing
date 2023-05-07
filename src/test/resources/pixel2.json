@@ -6,7 +6,8 @@
       "appium:platformVersion": "7.0",
       "appium:appPackage": "ru.ok.android",
       "appium:udid": "emulator-5554",
-      "appium:appActivity": "ru.ok.android.ui.activity.main.OdklActivity"
+      "appium:appActivity": "ru.ok.android.ui.activity.main.OdklActivity",
+      "appium:app": "C:\\programms\\projects\\java\\softwareTesting\\src\\test\\resources\\ok.apk"
     },
     "url": "http://127.0.0.1:4723/wd/hub"
   }
