@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'org.gradle.test-retry' version '1.0.0'
 }
 
 group 'org.Generalov'
@@ -14,9 +15,13 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
     testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.32'
     implementation 'org.json:json:20230227'
-    testImplementation 'org.testng:testng:7.7.1'
 }
 
 test {
     useJUnitPlatform()
+    retry {
+        maxRetries = 3
+        maxFailures = 20
+        failOnPassedAfterRetry = true
+    }
 }
