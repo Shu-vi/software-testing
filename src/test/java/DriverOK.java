@@ -18,6 +18,9 @@ public class DriverOK {
             case ANDROID: {
                 return setAndroidCapabilities(capabilities);
             }
+            case ANY: {
+                return setBrowserstackCapabilities(capabilities);
+            }
             default:
                 throw new RuntimeException("Incorrect platform");
         }
@@ -40,6 +43,20 @@ public class DriverOK {
     private static AndroidDriver<MobileElement> setAndroidCapabilities(DesiredCapabilities capabilities) {
         AndroidDriver<MobileElement> driver = null;
         String path = System.getProperty("user.dir") + "\\src\\test\\resources\\pixel2.json";
+        JSONObject appiumJson = JSONService.readJsonFromFile(path);
+        JSONObject caps = JSONService.getCapabilities(appiumJson);
+        caps.keySet().forEach(keyStr -> capabilities.setCapability(keyStr, caps.get(keyStr)));
+        try {
+            driver = new AndroidDriver<>(new URL(JSONService.getUrl(appiumJson)), capabilities);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return driver;
+    }
+
+    private static AndroidDriver<MobileElement> setBrowserstackCapabilities(DesiredCapabilities capabilities) {
+        AndroidDriver<MobileElement> driver = null;
+        String path = System.getProperty("user.dir") + "\\src\\test\\resources\\browserStack.json";
         JSONObject appiumJson = JSONService.readJsonFromFile(path);
         JSONObject caps = JSONService.getCapabilities(appiumJson);
         caps.keySet().forEach(keyStr -> capabilities.setCapability(keyStr, caps.get(keyStr)));
