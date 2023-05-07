@@ -4,21 +4,18 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.junit.jupiter.api.*;
 
-import static com.codeborne.selenide.Selenide.*;
 
-
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class OKTest {
-    private static AuthPage authPage;
-    private static NewsFeedPage newsFeedPage;
-    private static DiscussionsPage discussionsPage;
-    private static NavbarPage navbarPage;
-    private static SettingsPage settingsPage;
-    private static MessagesPage messagesPage;
+    private AuthPage authPage;
+    private NewsFeedPage newsFeedPage;
+    private DiscussionsPage discussionsPage;
+    private NavbarPage navbarPage;
+    private SettingsPage settingsPage;
+    private MessagesPage messagesPage;
 
-    @BeforeAll
-    public static void setUp() {
-        closeWebDriver();
+
+    @BeforeEach
+    public void setUpTest() {
         Configuration.timeout = Config.TIMEOUTS;
         AppiumDriver<MobileElement> driver = DriverOK.createDriver();
         WebDriverRunner.setWebDriver(driver);
@@ -30,63 +27,63 @@ public class OKTest {
         settingsPage = new SettingsPage(driver);
     }
 
-    @AfterAll
-    public static void tearDown() {
+    @AfterEach
+    public void tearDownTest() {
         WebDriverRunner.closeWebDriver();
     }
 
     @Test
-    @Order(1)
     void auth() {
-        authPage.setLoginField(Properties.OK_LOGIN);
-        authPage.setPasswordField(Properties.OK_PASSWORD);
-        authPage.loginButtonClick();
+        authPage.auth(Properties.OK_LOGIN, Properties.OK_PASSWORD);
         Assertions.assertTrue(newsFeedPage.atPage());
     }
 
     @Test
-    @Order(2)
-    public void newsFeed() {
+    public void newsFeedScroll() {
+        authPage.auth(Properties.OK_LOGIN, Properties.OK_PASSWORD);
         newsFeedPage.scrollDown();
         newsFeedPage.scrollTop();
         Assertions.assertTrue(newsFeedPage.atPage());
-        newsFeedPage.discussionClick();
     }
 
     @Test
-    @Order(3)
-    public void discussion() {
+    public void discussionScroll() {
+        authPage.auth(Properties.OK_LOGIN, Properties.OK_PASSWORD);
+        newsFeedPage.discussionClick();
         discussionsPage.scrollTop();
         Assertions.assertTrue(discussionsPage.atPage());
     }
 
     @Test
-    @Order(4)
-    public void navbar() {
-        discussionsPage.leftBarClick();
+    public void changeTheme() {
+        authPage.auth(Properties.OK_LOGIN, Properties.OK_PASSWORD);
+        newsFeedPage.navbarClick();
         Assertions.assertTrue(navbarPage.atPage());
         navbarPage.moreClick();
         navbarPage.settingsButtonClick();
         Assertions.assertTrue(settingsPage.apPage());
-    }
-
-    @Test
-    @Order(5)
-    public void settings() {
         settingsPage.deviceSettingsClick();
         settingsPage.appearanceSettingsClick();
         settingsPage.themeChange();
         Assertions.assertTrue(settingsPage.isBlackThemeActive());
         settingsPage.themeChange();
-        settingsPage.backButtonClick();
-        settingsPage.backButtonClick();
-        settingsPage.backButtonClick();
-        discussionsPage.messagesClick();
+        Assertions.assertFalse(settingsPage.isBlackThemeActive());
     }
 
     @Test
-    @Order(6)
-    public void messages() {
+    public void logout() {
+        authPage.auth(Properties.OK_LOGIN, Properties.OK_PASSWORD);
+        newsFeedPage.navbarClick();
+        Assertions.assertTrue(navbarPage.atPage());
+        navbarPage.moreClick();
+        navbarPage.exitButtonClick();
+        navbarPage.exitButtonConfirmClick();
+    }
+
+    @Test
+    public void createChatAndSendMessageAndDeleteMessage() {
+        authPage.auth(Properties.OK_LOGIN, Properties.OK_PASSWORD);
+        newsFeedPage.messagesClick();
         messagesPage.createChatClick();
         messagesPage.createChatConfirmClick();
         messagesPage.setChatTitle("Test chat");
@@ -97,22 +94,19 @@ public class OKTest {
         messagesPage.photoClick();
         messagesPage.photoClick();
         messagesPage.sendPhotoClick();
-    }
-
-    @Test
-    @Order(7)
-    public void deleteMessage() {
         messagesPage.messageClick();
         messagesPage.deleteButtonClick();
         messagesPage.deleteConfirmClick();
-        messagesPage.backButtonClick();
-        messagesPage.navbarClick();
     }
 
     @Test
-    @Order(8)
-    public void doNotDisturb() {
+    public void setStatusDoNotDisturb() {
+        authPage.auth(Properties.OK_LOGIN, Properties.OK_PASSWORD);
+        newsFeedPage.navbarClick();
+        Assertions.assertTrue(navbarPage.atPage());
+        navbarPage.moreClick();
         navbarPage.settingsButtonClick();
+        Assertions.assertTrue(settingsPage.apPage());
         settingsPage.notificationsSectionClick();
         settingsPage.pushNotificationSectionClick();
         settingsPage.doNotDisturbClick();

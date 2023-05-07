@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class DiscussionsPage extends Page {
     @AndroidFindBy(accessibility = "Открыть боковое меню")
-    private MobileElement leftBar;
+    private MobileElement navbar;
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Обсуждения']")
     private MobileElement discussionHeader;
     @AndroidFindBy(accessibility = "Сообщения")
@@ -23,8 +23,8 @@ public class DiscussionsPage extends Page {
         Utils.scrollOneBackward(1);
     }
 
-    public void leftBarClick() {
-        $(leftBar).should(exist).click();
+    public void navbarClick() {
+        $(navbar).should(exist).click();
     }
 
     public void messagesClick(){

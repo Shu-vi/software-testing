@@ -22,15 +22,21 @@ public class AuthPage extends Page {
     }
 
 
-    public void setLoginField(String loginField) {
+    private void setLoginField(String loginField) {
         $(this.loginField).should(Condition.exist).setValue(loginField);
     }
 
-    public void setPasswordField(String passwordField) {
+    private void setPasswordField(String passwordField) {
         $(this.passwordField).should(Condition.exist).setValue(passwordField);
     }
 
-    public void loginButtonClick() {
+    private void loginButtonClick() {
         $(this.loginButton).should(Condition.exist).click();
+    }
+
+    public void auth(String loginField, String passwordField){
+        setLoginField(loginField);
+        setPasswordField(passwordField);
+        loginButtonClick();
     }
 }

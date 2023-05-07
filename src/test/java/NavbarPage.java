@@ -1,3 +1,4 @@
+import com.codeborne.selenide.Condition;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -15,6 +16,10 @@ public class NavbarPage extends Page {
     private MobileElement more;
     @AndroidFindBy(xpath = "//android.widget.LinearLayout[10]")
     private MobileElement settingsButton;
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text='Выйти']")
+    private MobileElement exitButton;
+    @AndroidFindBy(id = "ru.ok.android:id/md_buttonDefaultPositive")
+    private MobileElement confirmExitButton;
 
     public NavbarPage(AppiumDriver<MobileElement> driver) {
         super(driver);
@@ -31,5 +36,13 @@ public class NavbarPage extends Page {
 
     public Boolean atPage() {
         return $(username).should(exist).isDisplayed();
+    }
+
+    public void exitButtonClick() {
+        $(exitButton).should(Condition.exist).click();
+    }
+
+    public void exitButtonConfirmClick() {
+        $(confirmExitButton).should(Condition.exist).click();
     }
 }

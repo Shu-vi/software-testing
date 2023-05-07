@@ -14,10 +14,6 @@ public class SettingsPage extends Page {
     private MobileElement backButton;
     @AndroidFindBy(id = "ru.ok.android:id/name")
     private MobileElement username;
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[7]")
-    private MobileElement exitButton;
-    @AndroidFindBy(id = "ru.ok.android:id/md_buttonDefaultPositive")
-    private MobileElement confirmExitButton;
     @AndroidFindBy(xpath = "//android.view.ViewGroup[3]")
     private MobileElement appearanceSettings;
     @AndroidFindBy(xpath = "//android.view.ViewGroup[2]/android.widget.Switch")
@@ -42,14 +38,6 @@ public class SettingsPage extends Page {
 
     public void backButtonClick() {
         $(backButton).should(Condition.exist).click();
-    }
-
-    public void exitButtonClick() {
-        $(exitButton).should(Condition.exist).click();
-    }
-
-    public void exitButtonConfirmClick() {
-        $(confirmExitButton).should(Condition.exist).click();
     }
 
     public Boolean apPage() {

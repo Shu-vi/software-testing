@@ -1,6 +1,5 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
@@ -13,6 +12,10 @@ public class NewsFeedPage extends Page{
     private MobileElement newsHeader;
     @AndroidFindBy(accessibility = "Обсуждения")
     private MobileElement discussionButton;
+    @AndroidFindBy(accessibility = "Открыть боковое меню")
+    private MobileElement navbar;
+    @AndroidFindBy(accessibility = "Сообщения")
+    private MobileElement messages;
 
     public NewsFeedPage(AppiumDriver<MobileElement> driver) {
         super(driver);
@@ -35,5 +38,13 @@ public class NewsFeedPage extends Page{
 
     public void discussionClick(){
         $(discussionButton).should(exist).click();
+    }
+
+    public void navbarClick() {
+        $(navbar).should(exist).click();
+    }
+
+    public void messagesClick(){
+        $(messages).should(exist).click();
     }
 }
