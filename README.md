@@ -1,23 +1,73 @@
 ## Задание
-### Инструкции
-1) Настроить окружение для автоматизации на Appium
-2) Используя Appium Inspector и x86 emulators создайте активную сессию, затем запишите Desired Capabilities для запуска тестов. Используйте  apk.info https://play.google.com/store/apps/details?id=com.wt.apkinfo&hl=ru&gl=US. для указания app package/app activity
-3) Реализуйте автотесты с паттерном Page Object, используя gradle в качестве сборщика:
-4) Для поиска локаторов использовать Selenide и его методы
+Оптимизация кода для тестов. Подготовка для запуск на iOS:
+1) Оптимизируйте Page Object. Desired Capabilities должны храниться отдельно от пейджей и тестов - в json файле. Каждый элемент нужно ожидать методами Selenide:
+2) Тестируемое .apk должно лежать в папке resources, в случае с Browserstack .apk файл хранится ресуре фермы.
+    Подразумевается, что запустить можно на эмуляторе или ферме.
+    Проверяйте очистку куки и кэша на устройстве перед запуском тестов методами adb.
+3) Переписать Capabilities и SetUp() :   См BaseTest.javaprivate private setAndroidCapabilities() добавить поддержку iOS private setIOSCapabilities()
 
-### Автотесты:
+   Для инициализации элементов использовать AppiumFieldDecorator из io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
-**Нечетный номер в группе - VK  https://play.google.com/store/apps/details?id=com.vkontakte.android&hl=ru&gl=US**
-- Запуск приложения, авторизация (отключить двухфакторную авторизацию)
-- Переход в Новости, мессенджер. Проскроллить список диалогов и Новости (использовать swipe).  (использовать Android Driver)
-- Вызов меню: переход в настройки > внешний вид > включить/отключить темную тему
-- Выход с аккаунта
+   Пример объявления локатора:
 
-**Четный номер в группе - OK https://play.google.com/store/search?q=ok&c=apps&hl=ru&gl=US**
-- Запуск приложения, авторизация (Можно совершить авторизацию через другой сервис)
-Создать новый профиль или выбрать профиль (использовать Android Driver)
-- Переход в Ленту, Обсуждения. Проскроллить обсуждения и Ленту (использовать swipe)
-- Вызов меню: переход в настройки > внешний вид > включить/отключить темную тему
-- Выход с аккаунта
+protected AppiumDriver driver;
 
-Демонстрировать можно на x86 или на реальном устройстве через adb.
+public BaseScreen(AppiumDriver driver) {
+
+this.driver = driver;
+
+PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+
+}
+
+@iOSXCUIFindBy(accessibility = "send")
+
+@AndroidFindBy(xpath = "//*[@text='send']")
+
+private SelenideElement sendBtn
+
+public static boolean isIOS() {
+
+return PLATFORM_IOS.equals(platform)
+
+}
+
+public static boolean isAndroid() {
+
+return PLATFORM_ANDROID.equals(platform)
+
+}
+
+public void sendMessage () {
+
+if (isAndroid()) {...}
+
+if(isIOS()) {...}
+
+BrowserStack и фермы эмуляторов
+
+Запускайте тесты используя фермы эмуляторов. Например, Browserstack и так далее.
+
+Подробнее https://medium.com/effective-developers/запуск-автотестов-на-реальных-устройствах-с-помощью-amazon-device-farm-и-browserstack-6b77c259e0ac
+
+Вам нужно будет дописать соответствующие зависимости в файл управления сборки тестов. Убедитесь, что используются самые последние версии плагинов для appium.
+
+Дополните автотесты:
+
+- VK https://play.google.com/store/apps/details?id=com.vkontakte.android&hl=ru&gl=US
+- Создать чат с 1 участником.
+- Отправка сообщения с прикрепленным файлом img (в созданный чат)
+- Удаление сообщения (для всех участников чата)
+- Вызов меню: переход в настройки > Не беспокоить > 1 час > готово
+
+OK https://play.google.com/store/apps/details?id=ru.ok.android&hl=ru&gl=US
+
+- Создать чат с 1 участником.
+- Отправка сообщения с прикрепленным файлом img (в созданный чат)
+- Удаление сообщения (для всех участников чата)
+- Вызов меню: переход в настройки > Оповещения и уведомления > Настройка push уведомлений > Не беспокоить
+
+Материалы:
+- https://appium.io
+- https://appium.io/docs/en/about-appium/api/
+- https://habr.com/ru/post/488482/
