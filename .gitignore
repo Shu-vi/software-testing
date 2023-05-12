@@ -33,4 +33,5 @@ src/test/java/Properties.java
 allure-results
 *.pdf
 src/test/resources/browserStack.json
-*.apk
+
+src/test/resources/ok.apk
